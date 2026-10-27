@@ -14,6 +14,7 @@ FROM orders;
 
 -- 2. Monthly sales performance
 -- Revenue is calculated from completed orders only.
+-- discount_pct is stored as a fraction (e.g. 0.10 = 10%).
 SELECT
     DATE_TRUNC('month', o.order_date)::DATE AS sales_month,
     COUNT(DISTINCT o.order_id) AS completed_orders,
@@ -21,7 +22,7 @@ SELECT
     ROUND(
         SUM(
             oi.quantity * oi.unit_price
-            * (1 - oi.discount_pct / 100.0)
+            * (1 - oi.discount_pct)
         ),
         2
     ) AS net_revenue
@@ -40,7 +41,7 @@ SELECT
     ROUND(
         SUM(
             oi.quantity * oi.unit_price
-            * (1 - oi.discount_pct / 100.0)
+            * (1 - oi.discount_pct)
         ),
         2
     ) AS net_revenue
@@ -61,7 +62,7 @@ SELECT
     ROUND(
         SUM(
             oi.quantity * oi.unit_price
-            * (1 - oi.discount_pct / 100.0)
+            * (1 - oi.discount_pct)
         ),
         2
     ) AS net_revenue
@@ -84,7 +85,7 @@ SELECT
     ROUND(
         SUM(
             oi.quantity * oi.unit_price
-            * (1 - oi.discount_pct / 100.0)
+            * (1 - oi.discount_pct)
         ),
         2
     ) AS net_revenue
